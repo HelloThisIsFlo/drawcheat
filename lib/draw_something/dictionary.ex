@@ -15,7 +15,7 @@ defmodule DrawSomething.Dictionary do
 
   def words, do: call :words
   def words(start_idx, end_idx), do: call {:words, start_idx, end_idx}
-  def count_lines, do: call :count
+  def word_count, do: call :count
 
   defp call(args), do: GenServer.call(__MODULE__, args)
 

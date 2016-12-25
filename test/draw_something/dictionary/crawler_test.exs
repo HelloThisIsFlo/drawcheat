@@ -13,6 +13,11 @@ defmodule DrawSomething.Dictionary.CrawlerTest do
     assert Crawler.words(pid) == ["bob", "bobby"]
   end
 
+  test "has correct range" do
+    assert {:ok, pid} = Crawler.Supervisor.start_crawler 0, 1
+    assert Crawler.range(pid) == 0..1
+  end
+
 
 
 

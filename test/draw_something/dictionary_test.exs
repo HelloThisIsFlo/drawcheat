@@ -12,7 +12,7 @@ defmodule DrawSomething.DictionaryTest do
       "is",
       "another",
       "test",
-      "I",
+      "i",
       "needed",
       "to",
       "make",
@@ -28,7 +28,7 @@ defmodule DrawSomething.DictionaryTest do
   end
 
   test "count lines" do
-    assert 16 == Dictionary.count_lines
+    assert 16 == Dictionary.word_count
   end
 
 end
