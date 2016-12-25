@@ -4,7 +4,7 @@ defmodule DrawSomething.DictionaryTest do
 
   test "read test file" do
     words = Dictionary.words
-    assert ["first", "second", "third"] = words
+    assert ["bob", "bobby", "hi"] = words
   end
 
   test "count lines" do

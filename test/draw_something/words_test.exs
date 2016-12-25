@@ -1,7 +1,7 @@
 defmodule DrawSomething.WordsTest do
   use ExUnit.Case
-  doctest DrawSomething.Words
   import DrawSomething.Words
+  doctest DrawSomething.Words
 
   test "can be written ? single letter" do
     assert can_be_written_with("a", "sdfg") == :false

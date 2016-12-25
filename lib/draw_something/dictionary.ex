@@ -13,11 +13,7 @@ defmodule DrawSomething.Dictionary do
     |> split_on_newline
   end
 
-  def count_lines do
-    words
-    |> count_lines
-  end
-  def count_lines(lines) when is_list(lines), do: length(lines)
+  def count_lines, do: words |> length
 
   defp split_on_newline(text), do: String.split(text, "\n", trim: :true)
 end
