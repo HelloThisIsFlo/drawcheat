@@ -8,6 +8,11 @@ defmodule DrawSomething.Dictionary.CrawlerTest do
     assert Crawler.words(pid) == ["bob", "bobby"]
   end
 
+  test "initialise via supervisor" do
+    assert {:ok, pid} = Crawler.Supervisor.start_crawler 0, 1
+    assert Crawler.words(pid) == ["bob", "bobby"]
+  end
+
 
 
 

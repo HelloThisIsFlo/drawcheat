@@ -7,7 +7,8 @@ defmodule DrawSomething.Supervisor do
 
   def init(:ok) do
     children = [
-      worker(DrawSomething.Dictionary, [])
+      worker(DrawSomething.Dictionary, []),
+      supervisor(DrawSomething.Dictionary.Crawler.Supervisor, [])
     ]
 
     supervise(children, strategy: :one_for_one)
