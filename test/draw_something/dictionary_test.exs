@@ -4,7 +4,23 @@ defmodule DrawSomething.DictionaryTest do
 
   test "read test file" do
     words = Dictionary.words
-    assert ["bob", "bobby", "hi"] == words
+    assert words == [
+      "bob",
+      "bobby",
+      "hi",
+      "this",
+      "is",
+      "another",
+      "test",
+      "I",
+      "needed",
+      "to",
+      "make",
+      "the",
+      "list",
+      "a",
+      "bit",
+      "longer"]
   end
 
   test "get sub-set of words" do
@@ -12,7 +28,7 @@ defmodule DrawSomething.DictionaryTest do
   end
 
   test "count lines" do
-    assert 3 == Dictionary.count_lines
+    assert 16 == Dictionary.count_lines
   end
 
 end

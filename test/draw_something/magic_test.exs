@@ -8,7 +8,7 @@ defmodule DrawSomething.MagicTest do
   # - hi
 
   test "happy path" do
-    assert cheat("aaaahiaaaa") == ["hi"]
+    assert cheat("xxxxhixxxx") == ["hi"]
     assert cheat("bobby") == ["bob", "bobby"]
   end
 
