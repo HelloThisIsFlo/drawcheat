@@ -13,7 +13,50 @@ defmodule DrawSomething.Dictionary do
     GenServer.start_link __MODULE__, :ok, name: __MODULE__
   end
 
-  def words do
+  def words, do: call :words
+  def words(start_idx, end_idx), do: call {:words, start_idx, end_idx}
+  def count_lines, do: call :count
+
+  defp call(args), do: GenServer.call(__MODULE__, args)
+
+
+  ######################################
+  ####    GenServer callbacks    #######
+  ######################################
+
+  def init(:ok) do
+    {:ok, words_from_file}
+  end
+
+
+  def handle_call(:words, _from, state) when @with_crash do
+    random_crash
+    {:reply, state, state}
+  end
+  def handle_call(:words, _from, state), do: {:reply, state, state}
+  def handle_call({:words, start_idx, end_idx}, _from, state) do
+    words = Enum.slice state, start_idx..end_idx
+    {:reply, words, state}
+  end
+
+  def handle_call(:count, _from, state), do: {:reply, state |> length, state}
+
+
+  #######################################
+  ####        Private func      #########
+  #######################################
+  defp words_from_file do
+    @path
+    |> File.read!
+    |> split_on_newline
+  end
+  defp split_on_newline(text), do: String.split(text, "\n", trim: :true)
+
+  ######################################
+  ####     Experimentations     ########
+  ######################################
+
+  def words_with_error_catch do
     # Not sure if best practice
     # Update when understand better
     try do
@@ -28,41 +71,15 @@ defmodule DrawSomething.Dictionary do
     []
   end
 
-  def count_lines do
-    GenServer.call(__MODULE__, :count)
-  end
-
-
-  ######################################
-  ####    GenServer callbacks    #######
-  ######################################
-
-  def init(:ok) do
-    {:ok, words_from_file}
-  end
-
-
-  def handle_call(:words, _from, state) when @with_crash do
+  defp random_crash do
     IO.puts "with crash"
     if Enum.random(1..100) < 30 do
       crash
     end
-    {:reply, state, state}
-  end
-  def handle_call(:words, _from, state), do: {:reply, state, state}
-
-  def handle_call(:count, _from, state) do
-    {:reply, state |> length, state}
   end
 
   defp crash do
     IO.puts "CRASHED !!!!"
     _ = length("asdf")
   end
-  defp words_from_file do
-    @path
-    |> File.read!
-    |> split_on_newline
-  end
-  defp split_on_newline(text), do: String.split(text, "\n", trim: :true)
 end
