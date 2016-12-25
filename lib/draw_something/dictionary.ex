@@ -14,7 +14,18 @@ defmodule DrawSomething.Dictionary do
   end
 
   def words do
-    GenServer.call(__MODULE__, :words)
+    # Not sure if best practice
+    # Update when understand better
+    try do
+      GenServer.call(__MODULE__, :words)
+    catch
+      :exit, _ -> resc
+    end
+  end
+
+  def resc do
+    IO.puts "rescue"
+    []
   end
 
   def count_lines do
@@ -34,8 +45,7 @@ defmodule DrawSomething.Dictionary do
   def handle_call(:words, _from, state) when @with_crash do
     IO.puts "with crash"
     if Enum.random(1..100) < 30 do
-      # Crash !!
-      length("asdf")
+      crash
     end
     {:reply, state, state}
   end
@@ -45,6 +55,10 @@ defmodule DrawSomething.Dictionary do
     {:reply, state |> length, state}
   end
 
+  defp crash do
+    IO.puts "CRASHED !!!!"
+    _ = length("asdf")
+  end
   defp words_from_file do
     @path
     |> File.read!
