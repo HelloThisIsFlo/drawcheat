@@ -18,6 +18,12 @@ defmodule DrawSomething.Dictionary.CrawlerTest do
     assert Crawler.range(pid) == 0..1
   end
 
+  test "find all possible words" do
+    assert {:ok, pid} = Crawler.Supervisor.start_crawler 0, 1
+    assert Crawler.find_all_possible_words(pid, "bob") == ["bob"]
+    assert Crawler.find_all_possible_words(pid, "bybob") == ["bob", "bobby"]
+  end
+
 
 
 

@@ -17,7 +17,8 @@ defmodule DrawSomething.Dictionary.CoordinatorTest do
   end
 
   test "get all with words in different crawlers" do
-    # IO.inspect cheat("testi")
+    words = Coordinator.get_all_possible_words("testi")
+    assert words == ["is", "test", "i"]
   end
 
 end

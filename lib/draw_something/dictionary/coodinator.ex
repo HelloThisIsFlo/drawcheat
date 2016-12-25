@@ -10,6 +10,7 @@ defmodule DrawSomething.Dictionary.Coordinator do
 
   def number_of_crawlers, do: call :num_crawlers
   def crawlers, do: call :crawlers
+  def get_all_possible_words(letters), do: call {:find_words, letters}
 
   defp call(args), do: GenServer.call __MODULE__, args
 
@@ -33,6 +34,28 @@ defmodule DrawSomething.Dictionary.Coordinator do
     {:reply, Enum.count(crawlers), crawlers}
   end
   def handle_call(:crawlers, _from, crawlers), do: {:reply, crawlers, crawlers}
+  def handle_call({:find_words, letters}, _from, crawlers) do
+
+    # for crawler <- crawlers do
+    #   Task.async(fn ->
+        
+    #   end)
+    # end
+
+    tasks = for {_, crawler} <- crawlers do
+      Task.async(fn ->
+        Dictionary.Crawler.find_all_possible_words(crawler, letters)
+      end)
+    end
+
+    result = for task <- tasks do
+      Task.await(task)
+    end
+    |> Enum.flat_map(&(&1))
+
+
+    {:reply, result, crawlers}
+  end
 
 
 
