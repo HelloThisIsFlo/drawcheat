@@ -14,7 +14,6 @@ defmodule Mix.Tasks.DrawSomething.BenchmarkCall do
   """
 
   def run(_args) do
-    # Mix.Task.run "app.start"
     DrawSomething.Dictionary.start_link
 
     Enum.each(1..30, fn(_n) -> print_result end)
