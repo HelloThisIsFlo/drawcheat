@@ -7,6 +7,7 @@ defmodule DrawSomething.Dictionary do
   """
 
   @path Application.fetch_env!(:draw_something, :dict_path)
+  @with_crash Application.fetch_env!(:draw_something, :with_crash)
 
   def start_link do
     GenServer.start_link __MODULE__, :ok, name: __MODULE__
@@ -29,9 +30,16 @@ defmodule DrawSomething.Dictionary do
     {:ok, words_from_file}
   end
 
-  def handle_call(:words, _from, state) do
+
+  def handle_call(:words, _from, state) when @with_crash do
+    IO.puts "with crash"
+    if Enum.random(1..100) < 30 do
+      # Crash !!
+      length("asdf")
+    end
     {:reply, state, state}
   end
+  def handle_call(:words, _from, state), do: {:reply, state, state}
 
   def handle_call(:count, _from, state) do
     {:reply, state |> length, state}
