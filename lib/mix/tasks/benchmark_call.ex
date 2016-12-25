@@ -1,13 +1,13 @@
 defmodule Mix.Tasks.DrawSomething.BenchmarkCall do
   use Mix.Task
 
-  """
+  ~S"""
   Notes:
   Before any genserver: Reading file each time
-  1.28 seconds
+  1.55 seconds
 
   After genserver: Reading file once
-  1.76 seconds
+  1.48 - 2.23 seconds
 
   After distributed load: Reading file once and splitting between workers
   enter result
@@ -15,9 +15,12 @@ defmodule Mix.Tasks.DrawSomething.BenchmarkCall do
 
   def run(_args) do
     # Mix.Task.run "app.start"
-
     DrawSomething.Dictionary.start_link
 
+    Enum.each(1..30, fn(_n) -> print_result end)
+  end
+
+  def print_result do
     duration = Benchmark.measure(fn ->
       DrawSomething.Magic.cheat("hellosdfwwer", 5)
     end)
