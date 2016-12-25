@@ -10,7 +10,7 @@ defmodule Mix.Tasks.DrawSomething.BenchmarkCall do
   1.48 - 2.23 seconds
 
   After distributed load: Reading file once and splitting between workers
-  enter result
+  0.30 seconds !!!!!!!!!!!!!!!
   """
 
   def run(_args) do
