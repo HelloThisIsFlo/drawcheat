@@ -2,6 +2,12 @@ defmodule DrawSomething.MagicTest do
   use ExUnit.Case
   import DrawSomething.Magic
 
+  setup do
+    # todo remove (put in supervisor)
+    DrawSomething.Dictionary.start_link
+    :ok
+  end
+
   # These tests rely on the fact that the test.txt file contains:
   # - bob
   # - bobby
